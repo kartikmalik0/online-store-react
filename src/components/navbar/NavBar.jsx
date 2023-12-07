@@ -11,9 +11,14 @@ const NavBar = () => {
 
   const context = useContext(myContext)
   const {mode , toggleMode} = context
-
   const [open, setOpen] = useState(false)
 
+  const user = JSON.parse(localStorage.getItem('user'))
+
+  const logout = () =>{
+    localStorage.clear('user')
+    window.location.href = '/login'
+  }
   return (
     <div  className='bg-white sticky top-0 z-50'>
 
@@ -63,16 +68,20 @@ const NavBar = () => {
                     </Link>
                   </div> 
  <div className="flow-root">
-                    <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900" style={{ color: mode === 'dark' ? 'white' : '', }}>
-                      admin
-                    </Link>
+                    {user?.user?.email === 'test5@gmail.com' ? 
+                  <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                  Admin
+                </Link> : <></>  
+                  }
                   </div>
 
                <div className="flow-root">
-                    <a className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
-                      Logout
-                    </a>
-                  </div> : <div className="flow-root">
+                   {user?.user ?
+                   <a onClick={logout} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                   Logout
+                 </a> : <></> 
+                  }
+                  </div>  <div className="flow-root">
                     <Link to={'/signup'}  className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
                       Signup
                     </Link>
@@ -114,6 +123,7 @@ const NavBar = () => {
           <div className="">
             <div className="flex h-16 items-center">
               <button
+              onClick={()=>setOpen(true)}
                 type="button"
                 className="rounded-md bg-white p-2 text-gray-400 lg:hidden"
                  style={{ backgroundColor: mode === 'dark' ? 'rgb(80 82 87)' : '', color: mode === 'dark' ? 'white' : '', }}
@@ -146,14 +156,18 @@ const NavBar = () => {
                       Signup
                     </Link>
 
-                   <Link to={'/dashboard'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
-                    Admin
-                  </Link> 
+                   {user?.user?.email === 'test5@gmail.com' ? 
+                  <Link  to={'/dashboard'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                  Admin
+                </Link> : "" 
+                  }
                   
                 
-                  <a  className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
-                    Logout
-                  </a> 
+                  {user?.user && 
+                <a onClick={logout}  className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                Logout
+              </a>  
+                }
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
