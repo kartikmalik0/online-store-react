@@ -21,8 +21,11 @@ const NavBar = () => {
     window.location.href = '/login'
   }
   return (
+    
     <div  className='bg-white sticky top-0 z-50'>
-
+<div>
+  {true ? <h1>hello</h1> : ""}
+</div>
 <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
           <Transition.Child
