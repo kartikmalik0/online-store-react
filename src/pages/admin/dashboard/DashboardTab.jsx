@@ -8,8 +8,7 @@ import { useContext } from 'react';
 
 function DashboardTab() {
     const context = useContext(myContext)
-    const { mode, product ,edithandle, deleteProduct } = context
-    console.log(product)
+    const { mode, product ,edithandle, deleteProduct,order } = context
     const add = () => {
         window.location.href = '/addproduct'
     }
@@ -142,7 +141,7 @@ function DashboardTab() {
                                 <h1 className=' text-center mb-5 text-3xl font-semibold underline' style={{ color: mode === 'dark' ? 'white' : '' }}>Order Details</h1>
 
 
-                                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400" >
+                         <table  className="w-full text-sm text-left text-gray-500 dark:text-gray-400" >
                                     <thead className="text-xs text-black uppercase bg-gray-200 " style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
                                         <tr>
                                             <th scope="col" className="px-6 py-3">
@@ -180,50 +179,54 @@ function DashboardTab() {
                                             </th>
                                         </tr>
                                     </thead>
-
-
-                                    <tbody>
+                                    {order.map((item,index)=>{
+                
+                                        return(
+                                            <tbody key={index}>
                                         <tr className="bg-gray-50 border-b  dark:border-gray-700" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {'asdf'}
+                                                {item?.paymentId}
                                             </td>
                                             <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                                <img className='w-16' src={'https://dummyimage.com/400x400'} alt="img" />
+                                                <img className='w-16' src={item?.cartItems[0]?.imageUrl} alt="img" />
                                             </th>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {'asdf'}
+                                                {item?.cartItems[0]?.title}
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                ₹{45}
+                                                ₹{item?.cartItems[0]?.price}
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {'asdf'}
+                                               {item?.cartItems[0]?.category}
                                             </td>
 
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {'asdf'}
+                                                {item?.addressInfo?.name}
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {'asdlkfj'}
+                                                {item?.addressInfo?.address}
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {'asdf'}
+                                            {item?.addressInfo?.pincode}
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {'asdfasdf'}
+                                            {item?.addressInfo?.phoneNumber}
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {'asdfasdf'}
+                                                {item?.email}
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {'asdfaf'}
+                                               {item?.date}
                                             </td>
 
                                         </tr>
 
                                     </tbody>
-
+                                        )
+                                    })}
                                 </table>
+                            
+                                
                             </div>
                         </TabPanel>
 
