@@ -8,7 +8,7 @@ import { useContext } from 'react';
 
 function DashboardTab() {
     const context = useContext(myContext)
-    const { mode, product ,edithandle, deleteProduct,order } = context
+    const { mode, product ,edithandle, deleteProduct,order,user } = context
     const add = () => {
         window.location.href = '/addproduct'
     }
@@ -250,31 +250,35 @@ function DashboardTab() {
                                             <th scope="col" className="px-6 py-3">
                                                 Uid
                                             </th>
-
+                                           
                                         </tr>
                                     </thead>
-
-                                    <tbody>
+                                   {user.map((item,index)=>{
+                                    const {name,uid,email} = item;
+                                    return(
+                                        <tbody key={index}>
                                         <tr className="bg-gray-50 border-b  dark:border-gray-700" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {1}.
+                                               {index + 1}.
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {'asdg'}
+                                                {name}
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {'asdf'}
+                                                {email}
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {'asdf'}
+                                                {uid}
                                             </td>
 
                                         </tr>
                                     </tbody>
-
+                                    )
+                                   })}
                                 </table>
                             </div>
                         </TabPanel>
+
                     </Tabs>
                 </div>
             </div>

@@ -151,13 +151,40 @@ export default function myState(props) {
       }
   }
 
+
+  const [user, setUser] = useState([]);
+
+  const getUserData = async () => {
+    setLoading(true)
+    try {
+        const result = await getDocs(collection(fireDB, "users"))
+        const usersArray = [];
+        result.forEach((doc) => {
+            usersArray.push(doc.data());
+            setLoading(false)
+        });
+        setUser(usersArray);
+        console.log(usersArray)
+        setLoading(false);
+    } catch (error) {
+        console.log(error)
+        setLoading(false)
+    }
+}
   useEffect(() => {
     getOrderData();
-    // getUserData();
+    getUserData();
 }, []);
 
+
+const [searchkey, setSearchkey] = useState('')
+const [filterType, setFilterType] = useState('')
+const [filterPrice, setFilterPrice] = useState('')
+
+
   return (
-    <myContext.Provider value={{ mode, toggleMode, loading, setLoading , products , setProducts , addProduct , product , edithandle,order, updateProduct, deleteProduct ,getOrderData}}>
+    <myContext.Provider value={{ mode, toggleMode, loading, setLoading , products , setProducts ,searchkey, setSearchkey,filterType,setFilterType,
+      filterPrice,setFilterPrice, addProduct , product , edithandle,order, updateProduct, deleteProduct ,getOrderData, user}}>
       {props.children}
     </myContext.Provider>
   )
