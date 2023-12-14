@@ -305,7 +305,7 @@ const deleteCartItem = async (productId) => {
 
   return (
     <myContext.Provider value={{ mode, toggleMode, loading, setLoading , products , setProducts ,searchkey, setSearchkey,filterType,setFilterType,
-      filterPrice,setFilterPrice, addProduct , product , edithandle,order, updateProduct, deleteProduct ,getOrderData, user,addCartFirebase , userCart,deleteCartItem,getCartItems}}>
+      filterPrice,setFilterPrice, addProduct , product , edithandle,order, updateProduct, deleteProduct ,getOrderData, user,addCartFirebase , userCart,getCartItems}}>
       {props.children}
     </myContext.Provider>
   )

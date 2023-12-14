@@ -21,9 +21,9 @@ function Cart() {
   const grandTotal = shipping + totalAmout;
   // console.log(grandTotal)
   const [userCart, setUserCart] = useState([])
-  // const context = useContext(myContext)
-  // const { mode } = context;
-const mode = ""
+  const context = useContext(myContext)
+  const { mode,deleteCartItem } = context;
+
   const getCartItems = async () => {
     const userString = localStorage.getItem('user');
     const userObject = JSON.parse(userString);
@@ -57,41 +57,7 @@ const mode = ""
  },[])
  
 
- const deleteCartItem = async (productId) => {
-  const userString = localStorage.getItem('user');
-  const userObject = JSON.parse(userString);
-  const userId = userObject?.user?.uid;
-
-  if (!userId) {
-    console.error('User ID not available.');
-    return;
-  }
-
-  const cartRef = doc(fireDB, 'userCart', userId);
-
-  try {
-    const cartDoc = await getDoc(cartRef);
-
-    if (cartDoc.exists()) {
-      const currentCartArray = cartDoc.data().cartItems || [];
-
-      // Find the index of the cart item with the specified product ID
-      const indexToDelete = currentCartArray.findIndex(item => item.id === productId);
-
-      if (indexToDelete !== -1) {
-        // Use the delete operator to remove the item from the array
-        delete currentCartArray[indexToDelete];
-
-        // Update the cart items in Firestore
-        await setDoc(cartRef, { cartItems: currentCartArray.filter(Boolean) });
-        toast.success('Item Removed')
-        getCartItems()
-      } 
-    } 
-  } catch (error) {
-    console.error('Error deleting cart item:', error);
-  }
-};
+ 
 
 
     const buyNow = async () => {

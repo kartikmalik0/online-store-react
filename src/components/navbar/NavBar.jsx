@@ -19,7 +19,7 @@ const NavBar = () => {
 
   useEffect(()=>{
     getCartItems()
-  })
+  },[])
 
   const logout = () =>{
     localStorage.clear('user')
