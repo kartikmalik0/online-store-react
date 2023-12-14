@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import myContext from './myContext'
-import { Timestamp, addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, setDoc } from "firebase/firestore"
+import { Timestamp, addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc } from "firebase/firestore"
 import { toast } from 'react-toastify'
 import { fireDB } from '../../firebase/FirebaseConfig'
 export default function myState(props) {
@@ -17,7 +17,6 @@ export default function myState(props) {
   }
 
   const [loading, setLoading] = useState(false)
-
   const [products, setProducts] = useState({
     title: null,
     price: null,
@@ -39,7 +38,6 @@ export default function myState(props) {
       return toast.error("all fields are required")
     }
     setLoading(true)
-
     try {
         const productRef = collection(fireDB, 'products');
         await addDoc(productRef, products)
@@ -164,7 +162,6 @@ export default function myState(props) {
             setLoading(false)
         });
         setUser(usersArray);
-        console.log(usersArray)
         setLoading(false);
     } catch (error) {
         console.log(error)
@@ -182,9 +179,133 @@ const [filterType, setFilterType] = useState('')
 const [filterPrice, setFilterPrice] = useState('')
 
 
+
+
+
+
+
+const addCartFirebase = async (cart) => {
+  const userString = localStorage.getItem('user');
+  const userObject = JSON.parse(userString);
+  const id = userObject?.user?.uid;
+  console.log(id);
+
+  const cartRef = doc(fireDB, 'userCart', id);
+
+  const finalCart = { userId: id, ...cart };
+  console.log(finalCart);
+  console.log(cart);
+
+  setLoading(true);
+  try {
+    // Retrieve the current data
+    const cartDoc = await getDoc(cartRef);
+    const currentCartArray = cartDoc.exists() ? cartDoc.data().cartItems || [] : [];
+
+    // Append the new cart item
+    const updatedCartArray = [...currentCartArray, finalCart];
+
+    // Set the updated array back to Firestore
+    await setDoc(cartRef, { cartItems: updatedCartArray });
+    getCartItems()
+    toast.success("Add to Cart");
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+    setLoading(false);
+  }
+};
+
+
+
+
+
+
+const [userCart, setUserCart] = useState('')
+const getCartItems = async () => {
+  const userString = localStorage.getItem('user');
+  const userObject = JSON.parse(userString);
+  const userId = userObject?.user?.uid;
+
+  if (!userId) {
+    console.error('User ID not available.');
+    return [];
+  }
+
+  const cartRef = doc(fireDB, 'userCart', userId);
+
+  try {
+    const cartDoc = await getDoc(cartRef);
+    if (cartDoc.exists()) {
+      const cartItems = cartDoc.data().cartItems || [];
+      setUserCart(cartItems)
+      return cartItems;
+    } else {
+      console.log('Cart document does not exist.');
+      return [];
+    }
+  } catch (error) {
+    console.error('Error retrieving cart items:', error);
+    return [];
+  }
+};
+
+
+
+
+
+
+
+//delete cart
+
+
+
+const deleteCartItem = async (productId) => {
+  const userString = localStorage.getItem('user');
+  const userObject = JSON.parse(userString);
+  const userId = userObject?.user?.uid;
+
+  if (!userId) {
+    console.error('User ID not available.');
+    return;
+  }
+
+  const cartRef = doc(fireDB, 'userCart', userId);
+
+  try {
+    const cartDoc = await getDoc(cartRef);
+
+    if (cartDoc.exists()) {
+      const currentCartArray = cartDoc.data().cartItems || [];
+
+      // Find the index of the cart item with the specified product ID
+      const indexToDelete = currentCartArray.findIndex(item => item.id === productId);
+
+      if (indexToDelete !== -1) {
+        // Use the delete operator to remove the item from the array
+        delete currentCartArray[indexToDelete];
+
+        // Update the cart items in Firestore
+        await setDoc(cartRef, { cartItems: currentCartArray.filter(Boolean) });
+        toast.success('Item Removed')
+        getCartItems()
+      } 
+    } 
+  } catch (error) {
+    console.error('Error deleting cart item:', error);
+  }
+};
+
+
+
+
+
+
+
+
   return (
     <myContext.Provider value={{ mode, toggleMode, loading, setLoading , products , setProducts ,searchkey, setSearchkey,filterType,setFilterType,
-      filterPrice,setFilterPrice, addProduct , product , edithandle,order, updateProduct, deleteProduct ,getOrderData, user}}>
+      filterPrice,setFilterPrice, addProduct , product , edithandle,order, updateProduct, deleteProduct ,getOrderData, user,addCartFirebase , userCart,deleteCartItem,getCartItems}}>
       {props.children}
     </myContext.Provider>
   )

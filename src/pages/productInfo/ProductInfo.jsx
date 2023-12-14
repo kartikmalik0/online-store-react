@@ -10,17 +10,15 @@ import { fireDB } from '../../firebase/FirebaseConfig';
 
 function ProductInfo() {
     const context = useContext(myContext);
-    const { loading, setLoading } = context;
+    const {  setLoading } = context;
 
     const [products, setProducts] = useState('')
     const params = useParams()
-    // console.log(products.title)
 
     const getProductData = async () => {
         setLoading(true)
         try {
             const productTemp = await getDoc(doc(fireDB, "products", params.id))
-            // console.log(productTemp)
             setProducts(productTemp.data());
             // console.log(productTemp.data())
             setLoading(false)
@@ -199,7 +197,7 @@ function ProductInfo() {
                     </div>}
                 </div>
             </section>
-
+            
         </Layout>
     )
 }

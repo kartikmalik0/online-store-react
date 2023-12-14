@@ -7,13 +7,14 @@ import { toast } from 'react-toastify'
 
 function ProductCard() {
     const context = useContext(myContext)
-    const { mode , product ,searchkey, setSearchkey,filterType,
-        filterPrice} = context
+    const { mode , product ,searchkey,filterType,
+        filterPrice,addCartFirebase } = context
     const dispatch = useDispatch()
     const cartItems = useSelector((state)=>state.cart)
     const addCart = (product) =>{
-        dispatch(addToCart(product))
-        toast.success('Item added')
+        addCartFirebase(product)
+        // dispatch(addToCart(product))
+        // toast.success('Item added')
     }
     useEffect(()=>{
         localStorage.setItem('cart',JSON.stringify(cartItems));
@@ -54,12 +55,7 @@ function ProductCard() {
                         </div>
                     )
                 })}
-
-
-
-
             </div>
-
         </div>
     </section >
 

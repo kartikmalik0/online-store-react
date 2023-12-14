@@ -30,6 +30,7 @@ function Login() {
                 theme: "colored",
               })
             localStorage.setItem('user', JSON.stringify(result))
+            console.log(result)
             navigate('/')
             setLoading(false)
             
@@ -80,5 +81,9 @@ function Login() {
 }
 
 export default Login
+
+
+
+
 
 
