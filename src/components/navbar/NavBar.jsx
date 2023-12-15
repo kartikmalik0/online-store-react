@@ -5,30 +5,28 @@ import { Fragment, useContext, useEffect, useState } from "react"
 import myContext from "../../context/data/myContext"
 import { Dialog, Transition } from '@headlessui/react'
 import { RxCross2 } from 'react-icons/rx'
-import { useSelector } from "react-redux"
 
 
 const NavBar = () => {
 
   const context = useContext(myContext)
-
-  const {mode , toggleMode,getCartItems ,userCart,} = context
+  const { mode, toggleMode, getCartItems, userCart, } = context
   const [open, setOpen] = useState(false)
-  const cartItems = useSelector((state)=>state.cart)
   const user = JSON.parse(localStorage.getItem('user'))
 
-  useEffect(()=>{
+  useEffect(() => {
     getCartItems()
-  },[])
+  }, [])
 
-  const logout = () =>{
+  const logout = () => {
     localStorage.clear('user')
     window.location.href = '/login'
   }
+
+  
   return (
-    
-    <div  className='bg-white sticky top-0 z-50'>
-<Transition.Root show={open} as={Fragment}>
+    <div className='bg-white sticky top-0 z-50'>
+      <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
           <Transition.Child
             as={Fragment}
@@ -63,32 +61,32 @@ const NavBar = () => {
                   </button>
                 </div>
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  
+
                   <Link to={'/allproducts'} className="text-sm font-medium text-gray-900 " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     All Products
                   </Link>
 
-                 <div className="flow-root">
-                    <Link to={'/order'} style={{ color: mode === 'dark' ? 'white' : '', }} className="-m-2 block p-2 font-medium text-gray-900">
-                      Order
+                  <div className="flow-root">
+                    <Link to={'/order'} style={{ color: mode === 'dark' ? 'white' : '' }} className="-m-2 block p-2 font-medium text-gray-900">
+                      Orders
                     </Link>
-                  </div> 
-                    {user?.user?.email === 'test5@gmail.com' ? 
-                <div className="flow-root">
-                  <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900" style={{ color: mode === 'dark' ? 'white' : '', }}>
-                  Admin
-                </Link>  
-                  </div> : <></>
+                  </div>
+                  {user?.user?.email === 'test5@gmail.com' ?
+                    <div className="flow-root">
+                      <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                        Admin
+                      </Link>
+                    </div> : <></>
                   }
 
-               <div className="flow-root">
-                   {user?.user ?
-                   <a onClick={logout} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
-                   Logout
-                 </a> : <></> 
-                  }
+                  <div className="flow-root">
+                    {user?.user ?
+                      <a onClick={logout} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                        Logout
+                      </a> : <></>
+                    }
                   </div>  <div className="flow-root">
-                    <Link to={'/signup'}  className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    <Link to={'/signup'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
                       Signup
                     </Link>
                   </div>
@@ -119,9 +117,9 @@ const NavBar = () => {
       </Transition.Root>
 
 
-       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8" 
-        style={{ backgroundColor: mode === 'dark' ? 'rgb(62 64 66)' : '', color: mode === 'dark' ? 'white' : '', }}>
+      <header className="relative bg-white">
+        <p className="flex h-10 items-center justify-center bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
+          style={{ backgroundColor: mode === 'dark' ? 'rgb(62 64 66)' : '', color: mode === 'dark' ? 'white' : '', }}>
           Get free delivery on orders over ₹300
         </p>
 
@@ -129,10 +127,10 @@ const NavBar = () => {
           <div className="">
             <div className="flex h-16 items-center">
               <button
-              onClick={()=>setOpen(true)}
+                onClick={() => setOpen(true)}
                 type="button"
                 className="rounded-md bg-white p-2 text-gray-400 lg:hidden"
-                 style={{ backgroundColor: mode === 'dark' ? 'rgb(80 82 87)' : '', color: mode === 'dark' ? 'white' : '', }}
+                style={{ backgroundColor: mode === 'dark' ? 'rgb(80 82 87)' : '', color: mode === 'dark' ? 'white' : '', }}
               >
                 <span className="sr-only">Open menu</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -156,24 +154,25 @@ const NavBar = () => {
                   <Link to={'/allproducts'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     All Products
                   </Link>
-                 <Link to={'/order'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
-                    Order
-                  </Link> :   <Link to={'/signup'}  className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
-                      Signup
-                    </Link>
+                  <Link to={'/order'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    Orders
+                  </Link>
+                  <Link to={'/signup'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    Signup
+                  </Link>
 
-                   {user?.user?.email === 'test5@gmail.com' ? 
-                  <Link  to={'/dashboard'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
-                  Admin
-                </Link> : "" 
+                  {user?.user?.email === 'test5@gmail.com' ?
+                    <Link to={'/dashboard'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                      Admin
+                    </Link> : ""
                   }
-                  
-                
-                  {user?.user && 
-                <a onClick={logout}  className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
-                Logout
-              </a>  
-                }
+
+
+                  {user?.user &&
+                    <a onClick={logout} className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                      Logout
+                    </a>
+                  }
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
@@ -199,7 +198,7 @@ const NavBar = () => {
                   <button className='' onClick={toggleMode}>
                     {mode === 'light' ?
                       (<FiSun className='' size={30} />
-                      // eslint-disable-next-line no-constant-condition
+                        // eslint-disable-next-line no-constant-condition
                       ) : 'dark' ?
                         (<BsFillCloudSunFill size={30} />
                         ) : ''}

@@ -179,51 +179,50 @@ function DashboardTab() {
                                             </th>
                                         </tr>
                                     </thead>
-                                    {order.map((item,index)=>{
-                
-                                        return(
-                                            <tbody key={index}>
-                                        <tr className="bg-gray-50 border-b  dark:border-gray-700" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
-                                            <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {item?.paymentId}
-                                            </td>
-                                            <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                                <img className='w-16' src={item?.cartItems[0]?.imageUrl} alt="img" />
-                                            </th>
-                                            <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {item?.cartItems[0]?.title}
-                                            </td>
-                                            <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                ₹{item?.cartItems[0]?.price}
-                                            </td>
-                                            <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                               {item?.cartItems[0]?.category}
-                                            </td>
-
-                                            <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {item?.addressInfo?.name}
-                                            </td>
-                                            <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {item?.addressInfo?.address}
-                                            </td>
-                                            <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                            {item?.addressInfo?.pincode}
-                                            </td>
-                                            <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                            {item?.addressInfo?.phoneNumber}
-                                            </td>
-                                            <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                {item?.email}
-                                            </td>
-                                            <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                               {item?.date}
-                                            </td>
-
-                                        </tr>
+                                    <tbody >
+                                    {order?.map((item,index) => (
+                                        
+  item && item.userCart && item.userCart[0] && (
+    <tr key={index} className="bg-gray-50 border-b dark:border-gray-700" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '' }}>
+      <td className="px-6 py-4 text-black" style={{ color: mode === 'dark' ? 'white' : '' }}>
+        {item?.paymentId}
+      </td>
+      <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap">
+        <img className='w-16' src={item?.userCart[0]?.imageUrl} alt="img" />
+      </th>
+      <td className="px-6 py-4 text-black" style={{ color: mode === 'dark' ? 'white' : '' }}>
+        {item?.userCart[0]?.title}
+      </td>
+      <td className="px-6 py-4 text-black" style={{ color: mode === 'dark' ? 'white' : '' }}>
+        ₹{item?.userCart[0]?.price}
+      </td>
+      <td className="px-6 py-4 text-black" style={{ color: mode === 'dark' ? 'white' : '' }}>
+        {item?.userCart[0]?.category}
+      </td>
+      <td className="px-6 py-4 text-black" style={{ color: mode === 'dark' ? 'white' : '' }}>
+        {item?.addressInfo?.name}
+      </td>
+      <td className="px-6 py-4 text-black" style={{ color: mode === 'dark' ? 'white' : '' }}>
+        {item?.addressInfo?.address}
+      </td>
+      <td className="px-6 py-4 text-black" style={{ color: mode === 'dark' ? 'white' : '' }}>
+        {item?.addressInfo?.pincode}
+      </td>
+      <td className="px-6 py-4 text-black" style={{ color: mode === 'dark' ? 'white' : '' }}>
+        {item?.addressInfo?.phoneNumber}
+      </td>
+      <td className="px-6 py-4 text-black" style={{ color: mode === 'dark' ? 'white' : '' }}>
+        {item?.email}
+      </td>
+      <td className="px-6 py-4 text-black" style={{ color: mode === 'dark' ? 'white' : '' }}>
+        {item?.date}
+      </td>
+    </tr>
+  )
+))}
 
                                     </tbody>
-                                        )
-                                    })}
+
                                 </table>
                             
                                 

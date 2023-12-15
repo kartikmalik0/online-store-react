@@ -132,22 +132,23 @@ export default function myState(props) {
   const [order, setOrder] = useState([]);
 
   const getOrderData = async () => {
-      setLoading(true)
-      try {
-          const result = await getDocs(collection(fireDB, "order"))
-          const ordersArray = [];
-          result.forEach((doc) => {
-              ordersArray.push(doc.data());
-              setLoading(false)
+    setLoading(true);
+    const ordersArray = [];
+    try {
+        const result = await getDocs(collection(fireDB, "order"));
+        result.forEach((doc) => {
+            ordersArray.push(doc.data());
           });
-          setOrder(ordersArray);
-          // console.log(ordersArray)
-          setLoading(false);
-      } catch (error) {
-          console.log(error)
-          setLoading(false)
-      }
-  }
+          console.log(order)
+        } catch (error) {
+          console.log(error);
+        } finally {
+        setOrder(ordersArray);
+        setLoading(false);
+    }
+};
+
+
 
 
   const [user, setUser] = useState([]);
