@@ -6,9 +6,6 @@ import { toast } from 'react-toastify';
 import { fireDB } from '../../firebase/FirebaseConfig';
 import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 
-
-
-
 function Cart() {
   const [totalAmout, setTotalAmount] = useState(0);
   const [name, setName] = useState("")
@@ -19,7 +16,6 @@ function Cart() {
   const shipping = parseInt(100);
 
   const grandTotal = shipping + totalAmout;
-  // console.log(grandTotal)
   const [userCart, setUsersCart] = useState([])
   const context = useContext(myContext)
   const { mode ,setUserCart} = context;
