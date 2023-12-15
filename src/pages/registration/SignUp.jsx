@@ -130,7 +130,7 @@ function Signup() {
                     </button>
                 </div>
                 <div>
-                    <h2 className='text-white'>Have an account <Link className=' text-red-500 font-bold' to={'/login'}>Login</Link></h2>
+                    <h2 className='text-white'>Have an account?<Link className=' text-red-500 font-bold' to={'/login'}> Login</Link></h2>
                 </div>
             </div>
         </div>
