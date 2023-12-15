@@ -90,6 +90,15 @@ function Cart() {
   }
 };
 
+useEffect(() => {
+  let temp = 0;
+  userCart.forEach((cartItem) => {
+    temp = temp + parseInt(cartItem.price)
+  })
+  setTotalAmount(temp);
+  console.log(temp)
+}, [userCart])
+
 
     const buyNow = async () => {
       if (name === "" || address == "" || pincode == "" || phoneNumber == "") {

@@ -14,7 +14,6 @@ const NavBar = () => {
 
   const {mode , toggleMode,getCartItems ,userCart,} = context
   const [open, setOpen] = useState(false)
-  const cartItems = useSelector((state)=>state.cart)
   const user = JSON.parse(localStorage.getItem('user'))
 
   useEffect(()=>{
