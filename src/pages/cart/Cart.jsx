@@ -15,7 +15,8 @@ function Cart() {
 
   const shipping = parseInt(100);
 
-  const grandTotal = shipping + totalAmout;  const [userCart, setUsersCart] = useState([])
+  const grandTotal = shipping + totalAmout;
+  const [userCart, setUsersCart] = useState([])
   const context = useContext(myContext)
   const { mode ,setUserCart} = context;
 
