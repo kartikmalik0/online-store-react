@@ -130,7 +130,6 @@ export default function myState(props) {
   }
 
   const [order, setOrder] = useState([]);
-
   const getOrderData = async () => {
     setLoading(true);
     const ordersArray = [];
