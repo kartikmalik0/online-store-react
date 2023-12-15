@@ -12,6 +12,7 @@ import AddProduct from "./pages/admin/pages/AddProduct";
 import UpdateProduct from "./pages/admin/pages/UpdateProduct";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import AllProducts from "./pages/allproducts/AllProducts";
 export default function App() {
   return (
     <MyState>
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="/addproduct" element={<AddProduct/>}/>
           <Route path="/updateproduct" element={<UpdateProduct/>}/>
           <Route path="/productinfo/:id" element={<ProductInfo/>}/>
+          <Route path="/allproducts" element={<AllProducts/>}/>
           <Route path="/*" element={<NoPage />} />
         </Routes>
         <ToastContainer/>

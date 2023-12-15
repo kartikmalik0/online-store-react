@@ -143,7 +143,7 @@ export default function myState(props) {
         } catch (error) {
           console.log(error);
         } finally {
-      setOrder(ordersArray);
+        setOrder(ordersArray);
         setLoading(false);
     }
 };
