@@ -188,13 +188,11 @@ const addCartFirebase = async (cart) => {
   const userString = localStorage.getItem('user');
   const userObject = JSON.parse(userString);
   const id = userObject?.user?.uid;
-  console.log(id);
 
   const cartRef = doc(fireDB, 'userCart', id);
 
   const finalCart = { userId: id, ...cart };
-  console.log(finalCart);
-  console.log(cart);
+
 
   setLoading(true);
   try {

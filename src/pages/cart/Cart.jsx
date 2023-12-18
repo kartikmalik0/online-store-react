@@ -9,17 +9,19 @@ import EmptyCart from './EmptyCart';
 
 function Cart() {
   const [totalAmout, setTotalAmount] = useState(0);
+  const [buySingleItem,setBuySingleItem] = useState(false)
   const [name, setName] = useState("")
   const [address, setAddress] = useState("");
   const [pincode, setPincode] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
+  const [singleCartItem,setSingleCartItem] = useState([])
 
   const shipping = parseInt(100);
 
   const grandTotal = shipping + totalAmout;
   const [userCart, setUsersCart] = useState([])
   const context = useContext(myContext)
-  const { mode ,setUserCart} = context;
+  const { mode ,setUserCart,addCartFirebase} = context;
 
   const getCartItems = async () => {
     const userString = localStorage.getItem('user');
@@ -92,13 +94,14 @@ function Cart() {
 };
 
 useEffect(() => {
-  let temp = 0;
+  if(!buySingleItem){
+    let temp = 0;
   userCart.forEach((cartItem) => {
     temp = temp + parseInt(cartItem.price)
   })
   setTotalAmount(temp);
-  console.log(temp)
-}, [userCart])
+  }
+}, [userCart,buySingleItem])
 
 
     const buyNow = async () => {
@@ -141,28 +144,28 @@ useEffect(() => {
         handler: function (response) {
           console.log(response)
           toast.success('Payment Successful')
-  
+
           const paymentId = response.razorpay_payment_id;
   
           const orderInfo = {
-            userCart,
+            userCart: buySingleItem ? [singleCartItem] : userCart,
             addressInfo,
-            date: new Date().toLocaleString(
-              "en-US",
-              {
-                month: "short",
-                day: "2-digit",
-                year: "numeric",
-              }
-            ),
+            date: new Date().toLocaleString("en-US", {
+              month: "short",
+              day: "2-digit",
+              year: "numeric",
+            }),
             email: JSON.parse(localStorage.getItem("user")).user.email,
             userid: JSON.parse(localStorage.getItem("user")).user.uid,
-            paymentId
-          }
+            paymentId,
+          };
+          
   
           try {
             const orderRef = collection(fireDB, 'order');
             addDoc(orderRef, orderInfo);
+            console.log(orderInfo)
+            // addCartFirebase({},orderInfo)
           } catch (error) {
             console.log(error)
           }
@@ -199,10 +202,18 @@ useEffect(() => {
                       <h2 className="text-sm  text-gray-900" style={{ color: mode === 'dark' ? 'white' : '' }}>{item?.description}</h2>
                       <p className="mt-1 text-xs font-semibold text-gray-700" style={{ color: mode === 'dark' ? 'white' : '' }}>₹{item?.price}</p>
                     </div>
-                    <div  className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+                    <div  className="mt-4 flex justify-between items-center sm:space-y-6 sm:mt-0 sm:block sm:space-x-6  ">
                       <svg onClick={()=>deleteCartItem(item.id)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                       </svg>
+                      <button onClick={()=>{
+                        const priceAsInt = parseInt(item?.price)
+                        setTotalAmount(priceAsInt) 
+                        setBuySingleItem('true')
+                        setSingleCartItem(item)
+                        console.log(item)
+                      }}
+                         type="button" className="focus:outline-none  md:hidden w-24 text-white bg-violet-600 hover:bg-violet-800  outline-0 font-medium rounded-lg text-sm px-2 py-2.5 ">Order Now</button>
                     </div>
                   </div>
                 </div>
@@ -236,6 +247,8 @@ useEffect(() => {
               setPincode={setPincode}
               setPhoneNumber={setPhoneNumber}
               buyNow={buyNow}
+              buySingleItem={buySingleItem}
+              setBuySingleItem={setBuySingleItem}
             />     
           </div>
         </div>

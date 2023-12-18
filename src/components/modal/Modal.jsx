@@ -1,10 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
-export default function Modal({ name, address, pincode, phoneNumber, setName, setAddress, setPincode, setPhoneNumber, buyNow }) {
+export default function Modal({ name, address, pincode, phoneNumber, setName, setAddress, setPincode, setPhoneNumber, buyNow,buySingleItem ,setBuySingleItem}) {
     console.log(name)
     let [isOpen, setIsOpen] = useState(false)
 
+    
     function closeModal() {
         setIsOpen(false)
     }
@@ -13,9 +14,16 @@ export default function Modal({ name, address, pincode, phoneNumber, setName, se
         setIsOpen(true)
     }
 
+    useEffect(() => {
+        if (buySingleItem) {
+          openModal();
+        }
+      }, [buySingleItem]);
+
+
     return (
         <>
-            <div className="  text-center rounded-lg text-white font-bold">
+            <div className="text-center rounded-lg text-white font-bold">
                 <button
                     type="button"
                     onClick={openModal}
