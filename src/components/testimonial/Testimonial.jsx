@@ -30,6 +30,7 @@ function Testimonial() {
                                 <p style={{color: mode === 'dark' ? 'white' : ''}} className="text-gray-500">UI Develeoper</p>
                             </div>
                         </div>
+                        
                         <div className="lg:w-1/3 lg:mb-0 p-4">
                             <div className="h-full text-center">
                                 <img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="https://webknudocs.vercel.app/logo/react.png" />
