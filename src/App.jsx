@@ -1,6 +1,7 @@
 import Home from "./pages/home/Home";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Order from "./pages/order/Order";
+import PropTypes from 'prop-types';
 import Cart from "./pages/cart/Cart";
 import Dashboard from "./pages/admin/dashboard/Dashboard";
 import NoPage from "./pages/nopage/NoPage";
@@ -50,7 +51,7 @@ export const ProtectedRoute = ({children}) =>{
   if(user){
     return children
   }else{
-    return <Navigate to={'/login'}/>
+    return <Navigate to={'/login' } replace={'true'}/>
   }
 }
 
@@ -60,6 +61,12 @@ export const ProtectedRouteAdmin = ({children}) =>{
   if(admin.user.email === 'test5@gmail.com'){
     return children
   }else{
-    return <Navigate to={'/login'}/>
+    return <Navigate to={'/login'} replace={'true'}/>
   }
 }
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+ProtectedRouteAdmin.propTypes = {
+  children: PropTypes.node.isRequired,
+};

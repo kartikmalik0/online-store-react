@@ -6,12 +6,14 @@ import { toast } from 'react-toastify';
 import { fireDB } from '../../firebase/FirebaseConfig';
 import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import EmptyCart from './EmptyCart';
+import Loader from '../../components/loader/Loader'
 
 function Cart() {
   const [totalAmout, setTotalAmount] = useState(0);
   const [buySingleItem,setBuySingleItem] = useState(false)
   const [name, setName] = useState("")
   const [address, setAddress] = useState("");
+  const [isLoading , setLoading] = useState(false)
   const [pincode, setPincode] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
   const [singleCartItem,setSingleCartItem] = useState([])
@@ -24,12 +26,14 @@ function Cart() {
   const { mode ,setUserCart,addCartFirebase} = context;
 
   const getCartItems = async () => {
+    setLoading(true)
     const userString = localStorage.getItem('user');
     const userObject = JSON.parse(userString);
     const userId = userObject?.user?.uid;
   
     if (!userId) {
       console.error('User ID not available.');
+      setLoading(false)
       return [];
     }
   
@@ -41,13 +45,16 @@ function Cart() {
         const cartItems = cartDoc.data().cartItems || [];
         setUsersCart(cartItems)
         setUserCart(cartItems)
+        setLoading(false)
         return cartItems;
       } else {
         console.log('Cart document does not exist.');
+        setLoading(false)
         return [];
       }
     } catch (error) {
       console.error('Error retrieving cart items:', error);
+      setLoading(false)
       return [];
     }
   };
@@ -185,9 +192,11 @@ useEffect(() => {
 
   return (
     <Layout >
-        {
-          userCart?.length > 0 ?
-      <div className="bg-gray-100 pt-5 mb-12 " style={{ backgroundColor: mode === 'dark' ? '#282c34' : '', color: mode === 'dark' ? 'white' : '', }}>
+       {
+        isLoading ? (
+          <Loader/>
+        ): userCart.length > 0 ? (
+          <div className="bg-gray-100 pt-5 mb-12 " style={{ backgroundColor: mode === 'dark' ? '#282c34' : '', color: mode === 'dark' ? 'white' : '', }}>
           <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
         <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 ">
           <div className="rounded-lg md:w-2/3 ">
@@ -252,9 +261,11 @@ useEffect(() => {
             />     
           </div>
         </div>
-      </div> :
-        <EmptyCart/>
-         }
+      </div> 
+        ):(
+          <EmptyCart/>
+        )
+       }
     </Layout>
   )
 }
