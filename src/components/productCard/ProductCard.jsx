@@ -29,6 +29,8 @@ function ProductCard() {
           <div className="h-1 w-20 bg-pink-600 rounded"></div>
         </div>
 
+        
+
        {
         product ?  <div className="flex flex-wrap -m-4 justify-center " >
         {product.filter((obj) => obj.title.toLowerCase().includes(searchkey))
@@ -44,7 +46,7 @@ function ProductCard() {
                 <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-black text-center text-sm text-white">Sale</span>
                 <div className="mt-4 px-5 pb-5" style={{ background: mode === 'dark' ? '' : '' }}>
                   <a href="#">
-                    <h5 className="text-xl font-semibold tracking-tight line-clamp-2" style={{ color: mode === 'dark' ? 'white' : '', }}>{title}</h5>
+                    <h5 className="text-xl font-semibold tracking-tight line-clamp-2" style={{ color: mode === 'dark' ? 'dark' : '' }}>{title}</h5>
                   </a>
                   <div className="mt-2.5 mb-5 flex items-center">
                     <span className="mr-2 rounded bg-yellow-200 px-2.5 py-0.5 text-xs font-semibold">5.0</span>
@@ -53,7 +55,7 @@ function ProductCard() {
                   </div>
                   <div key={index} className="flex items-center justify-between">
                     <p>
-                      <span className="text-3xl font-bold " style={{ color: mode === 'dark' ? 'white' : '' }}>₹{price}</span>
+                      <span className="text-3xl font-bold " style={{ color: mode === 'dark' ? 'dark' : '' }}>₹{price}</span>
                       {/* <span className="text-sm text-slate-900 line-through">$299</span> */}
                     </p>
                     <a
