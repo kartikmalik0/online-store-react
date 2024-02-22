@@ -58,9 +58,14 @@ function Order() {
                           <img src={item.imageUrl} alt="product-image" className="w-full rounded-lg sm:w-40" />
                           <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                             <div className="mt-5 sm:mt-0">
+                              <div className='flex items-center justify-between'>
                               <h2 className="text-lg font-bold text-gray-900" style={{ color: mode === 'dark' ? 'white' : '' }}>
                                 {item.title}
                               </h2>
+                              <p className=' font-light text-sm'>
+                                {item.date}
+                              </p>
+                              </div>
                               <p className="mt-1 text-xs text-gray-700" style={{ color: mode === 'dark' ? 'white' : '' }}>
                                 {item.description}
                               </p>
