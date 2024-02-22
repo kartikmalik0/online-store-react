@@ -70,3 +70,5 @@ ProtectedRoute.propTypes = {
 ProtectedRouteAdmin.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+// https://youtube.com/shorts/xed3CDnWmts?si=KS9y5-Au1F710Jj0

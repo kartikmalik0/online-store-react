@@ -17,6 +17,7 @@ export default function myState(props) {
   }
 
   const [loading, setLoading] = useState(false)
+  const [addCartLoading , setAddCartLoading] = useState({})
   const [products, setProducts] = useState({
     title: null,
     price: null,
@@ -185,16 +186,13 @@ export default function myState(props) {
 
 
   const addCartFirebase = async (cart) => {
+    setAddCartLoading(true);
     const userString = localStorage.getItem('user');
     const userObject = JSON.parse(userString);
     const id = userObject?.user?.uid;
-
     const cartRef = doc(fireDB, 'userCart', id);
-
     const finalCart = { userId: id, ...cart };
 
-
-    setLoading(true);
     try {
       // Retrieve the current data
       const cartDoc = await getDoc(cartRef);
@@ -207,10 +205,10 @@ export default function myState(props) {
       await setDoc(cartRef, { cartItems: updatedCartArray });
       getCartItems()
       toast.success("Add to Cart");
-      setLoading(false);
+      setAddCartLoading(false);
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setAddCartLoading(false);
     }
   };
 
@@ -303,7 +301,7 @@ export default function myState(props) {
 
   return (
     <myContext.Provider value={{
-      mode, toggleMode, loading, setLoading, products, setProducts, searchkey, setSearchkey, filterType, setFilterType,
+      mode, toggleMode, loading, setLoading, products, setProducts,addCartLoading,setAddCartLoading, searchkey, setSearchkey, filterType, setFilterType,
       filterPrice, setFilterPrice, addProduct, product, edithandle, order, updateProduct, deleteProduct, getOrderData, user, addCartFirebase, userCart, getCartItems, setUserCart
     }}>
       {props.children}
